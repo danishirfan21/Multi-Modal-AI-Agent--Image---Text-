@@ -1,0 +1,27 @@
+# Core ML Libraries
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.30.0
+accelerate>=0.20.0
+
+# Multi-modal Models
+pillow>=10.0.0
+opencv-python>=4.8.0
+
+# LangChain & Agent Framework
+langchain>=0.1.0
+langchain-community>=0.0.10
+langchain-openai>=0.0.5
+
+# Web Interface
+gradio>=4.0.0
+streamlit>=1.28.0
+
+# Utilities
+python-dotenv>=1.0.0
+requests>=2.31.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Optional: Local Models
+sentence-transformers>=2.2.0
