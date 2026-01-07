@@ -2,7 +2,7 @@
 LangChain Tools for Multi-Modal Agent
 """
 from langchain.tools import BaseTool
-from typing import Optional, Type
+from typing import Optional, Type, Any
 from pydantic import BaseModel, Field
 from PIL import Image
 import requests
@@ -24,8 +24,15 @@ class ImageCaptionTool(BaseTool):
     Returns a natural language description of the image content."""
     args_schema: Type[BaseModel] = ImageCaptionInput
 
-    def __init__(self):
-        super().__init__()
+    try:
+        # Pydantic v2
+        captioner: Any = Field(default=None, exclude=True)
+    except TypeError:
+        # Pydantic v1
+        captioner: Any = None
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         from models.image_captioner import ImageCaptioner
         self.captioner = ImageCaptioner()
 
@@ -57,8 +64,13 @@ class ImageQuestionTool(BaseTool):
     Returns an answer to the question based on the image content."""
     args_schema: Type[BaseModel] = ImageQuestionInput
 
-    def __init__(self):
-        super().__init__()
+    try:
+        captioner: Any = Field(default=None, exclude=True)
+    except TypeError:
+        captioner: Any = None
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         from models.image_captioner import ImageCaptioner
         self.captioner = ImageCaptioner()
 
@@ -90,8 +102,13 @@ class ImageClassificationTool(BaseTool):
     Returns the most likely category and confidence scores."""
     args_schema: Type[BaseModel] = ImageClassificationInput
 
-    def __init__(self):
-        super().__init__()
+    try:
+        embedder: Any = Field(default=None, exclude=True)
+    except TypeError:
+        embedder: Any = None
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         from models.clip_embedder import CLIPEmbedder
         self.embedder = CLIPEmbedder()
 
